@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int findIntegers(int n) {
+        int fib[31];
+        fib[0]=1;
+        fib[1]=2;
+        for(int i=2;i<30;i++)
+        {
+            fib[i] = fib[i-2] + fib[i-1];
+        }
+        int ans=0,i=30,prev=0;
+        while(i>=0)
+        {
+            if(n&(1<<i)){
+                ans += fib[i];
+                if(prev)return ans;
+                 prev=1;
+            }
+            else{
+                prev=0;
+            }
+            i--;
+        }
+        return ans+1;
+    }
+};
