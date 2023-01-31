@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int getLastMoment(int n, vector<int>& left, vector<int>& right) {
+         int mx = 0,mn = n;
+         for(int i=0;i<left.size();i++){
+             mx = max(mx,left[i]);
+         }
+          for(int i=0;i<right.size();i++){
+             mn = min(mn,right[i]);
+         }
+         int x = abs(0-mx);
+         int y = abs(n-mn);
+         return max(x,y);
+    }
+};
