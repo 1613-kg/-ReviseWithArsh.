@@ -1,0 +1,24 @@
+class Solution {
+public:
+    string customSortString(string order, string s) {
+        string ans;
+        for(int i=0;i<order.size();i++)
+        {
+            int cnt = 0;
+            cnt = count(s.begin(),s.end(),order[i]);
+            if(cnt!=0){
+                while(cnt--){
+                    ans.push_back(order[i]);
+                }
+            }
+        }
+        for(int i=0;i<s.size();i++)
+        {
+            size_t it = order.find(s[i]);
+            if(it==string::npos){
+                ans.push_back(s[i]);
+            }
+        }
+        return ans;
+    }
+};
