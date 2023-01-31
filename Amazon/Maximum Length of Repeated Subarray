@@ -1,0 +1,26 @@
+class Solution {
+public:
+
+    int solve(int i,int j,vector<vector<int>> &dp,int n,int m,vector<int>& nums1, vector<int>& nums2,int &len)
+    {
+        if(i>=n || j>=m)return 0;
+        if(dp[i][j]!=-1)return dp[i][j];
+
+        int ans = 0;
+        if(nums1[i]==nums2[j]){
+            ans = 1 + solve(i+1,j+1,dp,n,m,nums1,nums2,len);
+        }
+            solve(i+1,j,dp,n,m,nums1,nums2,len);
+            solve(i,j+1,dp,n,m,nums1,nums2,len);
+        len = max(ans,len);
+        return dp[i][j] = ans;
+    }
+
+    int findLength(vector<int>& nums1, vector<int>& nums2) {
+        int ans = 0;
+        int n = nums1.size(),m=nums2.size();
+        vector<vector<int>> dp(nums1.size()+1,vector<int> (nums2.size()+1,-1));
+         solve(0,0,dp,n,m,nums1,nums2,ans);
+        return ans;
+    }
+};
