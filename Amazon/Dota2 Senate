@@ -1,0 +1,25 @@
+class Solution {
+public:
+    string predictPartyVictory(string s) {
+        queue<int> rq,dq;
+        for(int i=0;i<s.size();i++){
+            (s[i]=='R') ? rq.push(i):dq.push(i);
+        }
+        while(!rq.empty() && !dq.empty())
+        {
+            int a = rq.front();
+            int b = dq.front();
+            rq.pop();
+            dq.pop();
+
+            if(a<b){
+                rq.push(a+s.size());
+            }
+            else{
+                dq.push(b+s.size());
+            }
+        }
+        if(rq.size()>dq.size())return "Radiant";
+        else return "Dire";
+    }
+};
