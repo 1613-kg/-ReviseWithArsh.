@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int mod=1e9+7;
+    int solve(int d,int k,vector<vector<int>> &dp){
+        if(k==0){
+            return d==0;
+        }
+        if(d>k)return 0;
+        if(dp[d][k]!=-1)return dp[d][k];
+
+        int x = solve(d+1,k-1,dp);
+        int y = solve(abs(d-1),k-1,dp);
+        return dp[d][k] = (x+y)%mod;
+    }
+
+    int numberOfWays(int startPos, int endPos, int k) {
+        int d = abs(startPos-endPos);
+        vector<vector<int>> dp(1000,vector<int> (1001,-1));
+        if(d>k || d%2!=k%2)return 0;
+        return solve(d,k,dp);
+    }
+};
