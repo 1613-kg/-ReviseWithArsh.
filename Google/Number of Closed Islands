@@ -1,0 +1,39 @@
+class Solution {
+public:
+     int dx[4] = {-1,0,1,0};
+        int dy[4] = {0,1,0,-1};
+
+        void dfs(int row,int col,vector<vector<int>>& a)
+        {
+            a[row][col] = 1;
+            for(int i=0;i<4;i++){
+                int nrow = row + dx[i];
+                int ncol = col + dy[i];
+                if((nrow>=0 && nrow<a.size()) && (ncol>=0 && ncol<a[0].size()) && a[nrow][ncol]==0){
+                    //a[nrow][ncol] = 1;
+                    dfs(nrow,ncol,a);
+                }
+            }
+        }
+    int closedIsland(vector<vector<int>>& a) {
+        int n = a.size();
+        int m  = a[0].size();
+        int ans=0;
+         for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(i*j==0 || i==n-1 || j==m-1){
+                    if(a[i][j]==0)dfs(i,j,a);
+                }
+            }
+         }
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(a[i][j]==0){
+                    ans++;
+                    dfs(i,j,a);
+                }
+            }
+        }
+        return ans;
+    }
+};
