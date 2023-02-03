@@ -1,0 +1,47 @@
+class Solution {
+public:
+    string longestPrefix(string s) {
+        // int i=0,j=s.size()-1;
+        // string ans="";
+        // deque<char> pre,suf,temp;
+        // while(i<s.size()-1 && j>=1)
+        // {
+        //     pre.push_back(s[i]);
+        //     suf.push_front(s[j]);
+        //     if(pre==suf && pre.size()>temp.size())
+        //     {
+        //         temp=pre;
+        //     }
+        //     i++;
+        //     j--;
+            
+        // }
+        // for(auto &x:temp)
+        // {
+        //     ans.push_back(x);
+        // }
+        // return ans;
+        int n = s.size();
+        vector<int>prefix(n, 0);
+        int i = 0, j = 1;
+        while(j < n){
+            if(s[i] == s[j]){
+                prefix[j] = i + 1;
+                i++;
+                j++;
+            }
+            else{
+                if(i == 0){
+                    j++;
+                }
+                else{
+                    i = prefix[i - 1];
+                }
+            }
+
+
+        }
+
+        return s.substr(0, i);
+    }
+};
