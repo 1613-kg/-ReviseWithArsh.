@@ -1,0 +1,56 @@
+class Solution {
+public:
+
+    bool dfs(int src,unordered_map<int,int> &m,vector<int> &vis,vector<vector<int>> adj[],int time)
+    {
+        m[src] = time;
+        vis[src] = 1;
+        if(src==0)return true;
+        for(auto &x:adj[src]){
+            if(!vis[x]){
+            if(dfs(x,m,vis,adj,time+1))return true;
+            }
+        }
+        m.erase(src);
+        return false;
+    }
+
+    int mostProfitablePath(vector<vector<int>>& edges, int bob, vector<int>& amount) {
+        int n = edges.size()+1;
+        vector<vector<int>> adj(n);
+            for(auto &x:edges){
+            adj[x[0]].push_back(x[1]);
+            adj[x[1]].push_back(x[0]);
+        }
+        unordered_map<int,int> m;
+        vector<int> vis(n,0);
+        dfs(bob,m,vis,adj,0);
+        vis.assign(n,0);
+        queue<vector<int>> q;
+        q.push({0,0,0});
+        int ans = INT_MIN;
+        while(!q.empty())
+        {
+            int src = q.front()[0];
+            int time = q.front()[1];
+            int income = q.front()[2];
+            q.pop();
+            vis[src]=1;
+            if(m.find(src)==m.end())income+=amount[src];
+            else{
+                if(time<m[src])income+=amount[src];
+                else if(time==m[src])income+=amount[src]/2;
+            }
+             if(adj[src].size()==1 && src!=0){
+                ans = max(ans,income);
+            }
+            for(auto &x:adj[src]){
+                if(!vis[x]){
+                    q.push({x,time+1,income});
+                }
+            }
+
+        }
+        return ans;
+    }
+};
