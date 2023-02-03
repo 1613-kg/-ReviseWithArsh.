@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int distinctEchoSubstrings(string s) {
+        set<string> st;
+        for(int i=1;i<=s.size()/2;i++){
+            int cnt=0;
+            for(int k=0,j=i;j<s.size();k++,j++){
+                if(s[k]==s[j])cnt++;
+                else cnt=0;
+                if(cnt==i){
+                    st.insert(s.substr(k,j-k+1));
+                    cnt--;
+                }
+            }
+        }
+        for(auto &x:st){
+            cout<<x<<endl;
+        }
+        return st.size();
+    }
+};
+
