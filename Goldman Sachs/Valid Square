@@ -1,0 +1,25 @@
+class Solution {
+public:
+    bool validSquare(vector<int>& p1, vector<int>& p2, vector<int>& p3, vector<int>& p4) {
+        map<double,int> m;
+        vector<pair<int,int>> v;
+        v.push_back({p1[0],p1[1]});
+         v.push_back({p2[0],p2[1]});
+          v.push_back({p3[0],p3[1]});
+           v.push_back({p4[0],p4[1]});
+        for(int i=0;i<v.size();i++){
+           for(int j=i+1;j<v.size();j++){
+               double dist = sqrt(pow(abs(v[i].first-v[j].first),2)+pow(abs(v[i].second-v[j].second),2));
+               m[dist]++;
+           }
+        }
+        double side =0,diagonal=0;
+        for(auto &x:m){
+            if(x.second==4)side=x.first;
+            else diagonal=x.first;
+            cout<<x.first<<" "<<x.second<<endl;
+        }
+        if(side!=0 && m.size()==2 && diagonal!=0)return true;
+        else return false;
+    }
+};
