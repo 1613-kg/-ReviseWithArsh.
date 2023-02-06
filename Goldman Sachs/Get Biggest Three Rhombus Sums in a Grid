@@ -1,0 +1,45 @@
+class Solution {
+public:
+   int dx[4] = {1,1,-1,-1};
+    int dy[4] = {1,-1,-1,1};
+   int getSum(int row,int col,vector<vector<int>>& grid,int k)
+   {
+       int sum=0;
+       int temp=0;
+       if((grid.size()-row-1)<k*2){
+           return -1;
+       }
+       while(temp<k*4)
+       {
+           sum += grid[row][col];
+           row += dx[temp/k];
+           col += dy[temp/k];
+           temp++;
+       }
+       return sum;
+   }
+
+    vector<int> getBiggestThree(vector<vector<int>>& grid) {
+        set<int> s;
+        int n = grid.size();
+        int m = grid[0].size();
+
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+               s.insert(grid[i][j]);
+               if(j==0 || j==m-1)continue;
+               int mxlen = min(j,m-j-1);
+               for(int k=1;k<=mxlen;k++){
+                   int sum = getSum(i,j,grid,k);
+                   if(sum!=-1)s.insert(sum);
+               }
+            }
+        }
+        vector<int> ans;
+         for(auto it=s.rbegin();it!=s.rend();++it){
+            if(ans.size()==3) break;
+            ans.push_back(*it);
+        }
+        return ans;    
+    }
+};
