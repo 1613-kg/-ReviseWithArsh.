@@ -1,0 +1,37 @@
+class Solution {
+public:
+
+    int solve(int used,vector<int> &alice,vector<vector<int>> &dp,int ind)
+    {
+        if(ind<=0){
+            return 0;
+        }
+        if(dp[ind][used]!=-1)return dp[ind][used];
+        int inc=0;
+        if(used>alice[ind]){
+            inc = ind + solve(used-alice[ind]-1,alice,dp,ind-1);
+        }
+        int exc = solve(used,alice,dp,ind-1);
+        return dp[ind][used]=max(inc,exc);
+    }
+ 
+    vector<int> maximumBobPoints(int numArrows, vector<int>& aliceArrows) {
+        vector<vector<int>> dp(12,vector<int> (numArrows+1,-1));
+        vector<int> ans(12,0);
+         int result = solve(numArrows,aliceArrows,dp,11);
+         int total=0;
+         for (int i=12, j=numArrows; i > 0 && result > 0; i--) {
+            if (result == dp[i-1][j])continue;
+            else {
+                ans[i] = aliceArrows[i]+1;
+                result -=  (i);  
+                j -= (aliceArrows[i]+1); 
+                total += aliceArrows[i]+1; 
+            }
+        }
+        if(total<numArrows){
+            ans[0] = numArrows-total;
+        }
+        return ans;
+    }
+};
